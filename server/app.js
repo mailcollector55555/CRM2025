@@ -65,7 +65,8 @@ app.use((err, req, res, next) => {
 });
 
 // Port d'écoute
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
+const port = 3000; // Port fixe pour éviter les conflits
+
+app.listen(port, '127.0.0.1', () => {
+    console.log(`Serveur démarré sur le port ${port}`);
 });
