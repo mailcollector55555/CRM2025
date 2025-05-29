@@ -71,14 +71,25 @@ const serverConfig = {
 };
 
 // Afficher la configuration au démarrage
-console.log('----------------------------------------');
+console.log('========================================');
 console.log('Démarrage du serveur...');
 console.log('Configuration:');
 console.log('- NODE_ENV:', process.env.NODE_ENV);
 console.log('- PORT:', process.env.PORT);
 console.log('- MONGODB_URI:', process.env.MONGODB_URI);
 console.log('- PWD:', process.cwd());
-console.log('----------------------------------------');
+console.log('========================================');
+
+// Vérifier les prérequis
+if (!process.env.JWT_SECRET) {
+    console.error('ERREUR: JWT_SECRET non défini');
+    process.exit(1);
+}
+
+if (!process.env.MONGODB_URI) {
+    console.error('ERREUR: MONGODB_URI non défini');
+    process.exit(1);
+}
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
