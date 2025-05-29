@@ -67,6 +67,22 @@ app.use((err, req, res, next) => {
 // Port d'écoute
 const port = 3000; // Port fixe pour éviter les conflits
 
-app.listen(port, '127.0.0.1', () => {
-    console.log(`Serveur démarré sur le port ${port}`);
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
 });
+
+process.on('unhandledRejection', (err) => {
+    console.error('Unhandled Rejection:', err);
+});
+
+try {
+    app.listen(port, '127.0.0.1', () => {
+        console.log('Environment:', process.env.NODE_ENV);
+        console.log('Current directory:', process.cwd());
+        console.log(`Serveur démarré sur le port ${port}`);
+    }).on('error', (err) => {
+        console.error('Server error:', err);
+    });
+} catch (err) {
+    console.error('Error starting server:', err);
+}
