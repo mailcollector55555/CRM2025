@@ -66,9 +66,11 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log('Login attempt:', { email });
 
         // Vérifier si l'utilisateur existe
         const user = await User.findOne({ email }).select('+password');
+        console.log('User found:', user ? 'yes' : 'no');
         if (!user) {
             return res.status(401).json({
                 success: false,
