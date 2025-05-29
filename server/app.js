@@ -18,10 +18,24 @@ app.use(express.urlencoded({ extended: true }));
 // Servir les fichiers statiques
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
+// Connexion à MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connecté'))
+.catch(err => console.error('Erreur MongoDB:', err));
+
 // Routes
+app.use('/api/users', require('./routes/users'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/bank-accounts', require('./routes/bankAccounts'));
 app.use('/api/banks', require('./routes/banks'));
+
+// Route de santé
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'OK', timestamp: new Date() });
+});
 
 // Gestion des erreurs 404
 app.use((req, res) => {
@@ -39,14 +53,6 @@ app.use((err, req, res, next) => {
         message: 'Erreur serveur'
     });
 });
-
-// Connexion à MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connecté à MongoDB'))
-.catch(err => console.error('Erreur de connexion MongoDB:', err));
 
 // Port d'écoute
 const PORT = process.env.PORT || 5000;
