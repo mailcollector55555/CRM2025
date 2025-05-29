@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
 // Configuration de base d'axios
-axios.defaults.baseURL = 'http://77.91.100.145';
+axios.defaults.baseURL = window.location.origin;
+console.log('API URL:', window.location.origin);
 
 const AuthContext = createContext(null);
 
