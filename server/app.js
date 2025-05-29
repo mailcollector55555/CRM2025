@@ -64,25 +64,40 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Port d'écoute
-const port = 3000; // Port fixe pour éviter les conflits
+// Configuration du serveur
+const serverConfig = {
+    port: 3000,
+    host: '127.0.0.1'
+};
+
+delete process.env.PORT; // Force remove PORT from env
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
+    process.exit(1);
 });
 
 process.on('unhandledRejection', (err) => {
     console.error('Unhandled Rejection:', err);
+    process.exit(1);
 });
 
 try {
-    app.listen(port, '127.0.0.1', () => {
-        console.log('Environment:', process.env.NODE_ENV);
-        console.log('Current directory:', process.cwd());
-        console.log(`Serveur démarré sur le port ${port}`);
-    }).on('error', (err) => {
+    const server = app.listen(serverConfig.port, serverConfig.host, () => {
+        console.log('----------------------------------------');
+        console.log('Server Configuration:');
+        console.log(`- Port: ${serverConfig.port}`);
+        console.log(`- Host: ${serverConfig.host}`);
+        console.log(`- Environment: ${process.env.NODE_ENV}`);
+        console.log(`- Directory: ${process.cwd()}`);
+        console.log('----------------------------------------');
+    });
+
+    server.on('error', (err) => {
         console.error('Server error:', err);
+        process.exit(1);
     });
 } catch (err) {
-    console.error('Error starting server:', err);
+    console.error('Fatal error starting server:', err);
+    process.exit(1);
 }
