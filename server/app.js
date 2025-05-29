@@ -38,6 +38,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/health', require('./routes/health'));
+app.use('/api/managers', require('./routes/managers'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/bank-accounts', require('./routes/bankAccounts'));
 app.use('/api/banks', require('./routes/banks'));
