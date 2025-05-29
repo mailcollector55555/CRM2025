@@ -67,7 +67,7 @@ app.use((err, req, res, next) => {
 // Configuration du serveur
 const serverConfig = {
     port: 3000,
-    host: '127.0.0.1'
+    host: '0.0.0.0' // Écouter sur toutes les interfaces
 };
 
 delete process.env.PORT; // Force remove PORT from env
