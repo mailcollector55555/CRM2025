@@ -43,6 +43,7 @@ app.use('/api/managers', require('./routes/managers'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/bank-accounts', require('./routes/bankAccounts'));
 app.use('/api/banks', require('./routes/banks'));
+app.use('/api/data', require('./routes/data'));
 
 // Route de santé
 app.get('/api/health', (req, res) => {
