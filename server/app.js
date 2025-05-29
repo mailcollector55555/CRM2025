@@ -66,11 +66,19 @@ app.use((err, req, res, next) => {
 
 // Configuration du serveur
 const serverConfig = {
-    port: 3000,
+    port: process.env.PORT || 3000,
     host: '0.0.0.0' // Écouter sur toutes les interfaces
 };
 
-delete process.env.PORT; // Force remove PORT from env
+// Afficher la configuration au démarrage
+console.log('----------------------------------------');
+console.log('Démarrage du serveur...');
+console.log('Configuration:');
+console.log('- NODE_ENV:', process.env.NODE_ENV);
+console.log('- PORT:', process.env.PORT);
+console.log('- MONGODB_URI:', process.env.MONGODB_URI);
+console.log('- PWD:', process.cwd());
+console.log('----------------------------------------');
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
