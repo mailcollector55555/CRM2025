@@ -13,12 +13,9 @@ async function initDb() {
         console.log('Users collection cleared');
 
         // Créer l'admin
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash('Admin123!', salt);
-        
         const admin = new User({
             email: 'admin@crm2025.com',
-            password: hashedPassword,
+            password: 'Admin123!', // Le modèle User hashera automatiquement le mot de passe
             firstName: 'Admin',
             lastName: 'System',
             role: 'admin'
