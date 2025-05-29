@@ -18,13 +18,23 @@ app.use(express.urlencoded({ extended: true }));
 // Servir les fichiers statiques
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
+console.log('Starting server...');
+console.log('MongoDB URI:', process.env.MONGODB_URI);
+
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-.then(() => console.log('MongoDB connecté'))
-.catch(err => console.error('Erreur MongoDB:', err));
+.then(() => {
+    console.log('MongoDB connecté');
+    console.log('Environment:', process.env.NODE_ENV);
+    console.log('Port:', process.env.PORT);
+})
+.catch(err => {
+    console.error('Erreur MongoDB:', err);
+    process.exit(1);
+});
 
 // Routes
 app.use('/api/users', require('./routes/users'));
